@@ -15,7 +15,9 @@ def read_batched_data(batches = BATCH_NUM):
     for i in tqdm(range(batches)):
         data_arr.append(pd.read_csv(f'PS_processed_data_batch{i+1}.csv'))
     data = pd.concat(data_arr)
-    data = data.drop(columns=['Unnamed: 0'])
+    
+    # TBU: dropping 'step' for now
+    data = data.drop(columns=['Unnamed: 0','step'])
     return data
 
 def scale_data(X_train, X_test):
