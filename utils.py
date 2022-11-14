@@ -4,7 +4,13 @@ from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import TimeSeriesSplit
+from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV, StratifiedKFold
 
+from sklearn.metrics import make_scorer, accuracy_score, recall_score, roc_auc_score, precision_score
+from sklearn.metrics import plot_confusion_matrix, auc, roc_curve, plot_roc_curve, plot_precision_recall_curve
+from sklearn.inspection import permutation_importance
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier, AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 
 BATCH_NUM = 19
@@ -71,3 +77,48 @@ def process_data(type_, folds = 5):
     else:
         print(f"Completed {type_} data processing.")
         return None
+    
+# compare final models
+def compare_models(models, model_names, X_train, y_train, X_test, y_test):
+    compare_results = {}
+    for i in range(len(models)):
+        model = models[i]
+        model_results = {}
+        y_pred_train = model.predict(X_train)
+        y_pred_test = model.predict(X_test)
+        
+        model_results['accuracy_train'] = accuracy_score(y_train, y_pred_train)
+        model_results['recall_train'] = recall_score(y_train, y_pred_train)
+        model_results['precision_train'] = precision_score(y_train, y_pred_train)
+        model_results['roc_auc_train'] = roc_auc_score(y_train, model.predict_proba(X_train)[:,1])
+        model_results['accuracy_test'] = accuracy_score(y_test, y_pred_test)
+        model_results['recall_test'] = recall_score(y_test, y_pred_test)
+        model_results['precision_test'] = precision_score(y_test, y_pred_test)
+        model_results['roc_auc_test'] = roc_auc_score(y_test, model.predict_proba(X_test)[:,1])
+    
+        compare_results[model_names[i]] = model_results
+    
+    return pd.DataFrame(compare_results)
+
+def grid_search(model, criterion, param_grid, k, X, y):
+    # Testing through a 5-fold CV and finding the combination that yields the highest criterion
+    grid = GridSearchCV(estimator=model,
+                        param_grid=param_grid,
+                        scoring=criterion,
+                        verbose=10,
+                        cv=StratifiedKFold(n_splits=k),
+                        n_jobs=1)
+
+    grid_result = grid.fit(X, y)
+    return grid_result
+
+def get_gridsearch_results(grid_search_result):
+    res = {}
+    
+    param_names = list(grid_search_result.cv_results_['params'][0].keys())
+    for param in param_names:
+        params = grid_search_result.cv_results_['param_' + param]
+        res[param] = params
+    
+    res['criterion_result'] = grid_search_result.cv_results_['mean_test_score']
+    return pd.DataFrame(res)
