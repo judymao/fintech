@@ -39,7 +39,7 @@ def split_data(X, y, test_size):
     return X_train, X_test, y_train, y_test
 
 def split_train(X, y, keep_percent):
-    print("Splitting train ...")
+    print(f"Keep {keep_percent*100}% train data ...")
     X_keep, X_discard, y_keep, y_discard = train_test_split(X, y, test_size=1-keep_percent, random_state=1, stratify=y)
     return X_keep, y_keep
 
@@ -105,12 +105,12 @@ def compare_models(models, model_names, X_train, y_train, X_test, y_test):
     
     return pd.DataFrame(compare_results)
 
-def grid_search(model, criterion, param_grid, k, X, y):
+def grid_search(model, criterion, param_grid, k, X, y, verbose=True):
     # Testing through a 5-fold CV and finding the combination that yields the highest criterion
     grid = GridSearchCV(estimator=model,
                         param_grid=param_grid,
                         scoring=criterion,
-                        verbose=10,
+                        verbose=10*verbose,
                         cv=StratifiedKFold(n_splits=k),
                         n_jobs=1)
 
