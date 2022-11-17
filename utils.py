@@ -38,6 +38,11 @@ def split_data(X, y, test_size):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=1, stratify=y)
     return X_train, X_test, y_train, y_test
 
+def split_train(X, y, keep_percent):
+    print("Splitting train ...")
+    X_keep, X_discard, y_keep, y_discard = train_test_split(X, y, test_size=1-keep_percent, random_state=1, stratify=y)
+    return X_keep, y_keep
+
 def split_data_time(X, y, folds):
     print(f"Splitting data into {folds} folds of train and test ...")
     tscv = TimeSeriesSplit(n_splits = folds)
