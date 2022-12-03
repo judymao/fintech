@@ -1,13 +1,13 @@
-# fintech
+# FinTech
 ECO416/FIN516 Final Project
 
 # Scripts
 ## Data
-- To run EDA scripts, please download the dataset from https://www.kaggle.com/datasets/ealaxi/paysim1 and name it "PS_data.csv". This should be placed in the same directory as the GitHub scripts. It is not included here due to GitHub's size limitations.
-- Files "PS_processed_data_batch1.csv" through "PS_processed_data_batch19.csv" are batched datasets that include our engineered features for model development. These files are used to generate training and test datasets.
+- To run EDA scripts, please download the dataset from https://www.kaggle.com/datasets/ealaxi/paysim1 and name it "PS_data.csv". This should be placed in the same directory as the GitHub scripts. It is not included here due to GitHub's file size limitations.
+- Files "PS_processed_data_batch1.csv" through "PS_processed_data_batch19.csv" are batched datasets that include our engineered features for model development. These files are used to generate training and testing datasets.
 
 ## EDA
-- EDA Notebooks: [EDA.ipynb](EDA.ipynb) and [Time Series EDA.ipynb](Time Series EDA.ipynb) - Generates plots for exploratory data analysis <br>
+- [EDA.ipynb](EDA.ipynb) and [Time Series EDA.ipynb](Time%20Series%20EDA.ipynb) - Generate plots for exploratory data analysis
 
 ## Models
 Scripts to perform cross-validation for model fitting process and report testing metrics for optimized models
