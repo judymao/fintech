@@ -10,11 +10,13 @@ ECO416/FIN516 Final Project
 - [EDA.ipynb](EDA.ipynb) and [Time Series EDA.ipynb](Time%20Series%20EDA.ipynb) - Generate plots for exploratory data analysis
 
 ## Models
-Scripts to perform cross-validation for model fitting process and report testing metrics for optimized models
+Scripts to perform cross-validation for model fitting process and report testing metrics for optimized models:
 - [model_logit.ipynb](model_logit.ipynb) - Logistic Regression
 - [model_nn.ipynb](model_nn.ipynb) - Neural Network
 - [model_rf.ipynb](model_rf.ipynb) - Decision Tree, Decision Tree with Boosting, and Random Forest
 - [model_svm.ipynb](model_svm.ipynb) - SVM
+
+The folders "models" and "small_models" are the final models that were trained on the full dataset and a smaller subset of the dataset, respectively.
 
 ## Other
 - [utils.py](utils.py) - Utility script to standardize certain functionalities, such as train/test data splitting process and model comparison
